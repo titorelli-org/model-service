@@ -1,9 +1,4 @@
-import type {
-  UnlabeledExample,
-  Prediction,
-  LabeledExample,
-  Labels,
-} from "../types";
+import type { UnlabeledExample, Prediction, LabeledExample } from "../types";
 import type { IModel } from "./IModel";
 import { LogisticRegressionWorker } from "../logistic-regression-worker";
 import { PorterStemmerRu } from "natural";
@@ -40,11 +35,7 @@ export class LogisticRegressionModel implements IModel {
     await this.worker.trainBulk(examples);
   }
 
-  onCreated(): void {
-    // Do nothing
-  }
-
   onRemoved(): void {
-    // Do nothing
+    void this.worker.stop();
   }
 }

@@ -26,7 +26,7 @@ export class ValueHolder<V extends HolderValueBase, Args extends any[]> {
 
     this.value = value;
 
-    value.onCreated();
+    value.onCreated?.();
 
     return value;
   }
@@ -38,7 +38,7 @@ export class ValueHolder<V extends HolderValueBase, Args extends any[]> {
   }
 
   private onTimeout = () => {
-    this.value?.onRemoved();
+    this.value?.onRemoved?.();
 
     delete this.value;
   };

@@ -17,10 +17,10 @@ export interface IModel {
   /**
    * Callback invoked when model removed from store
    */
-  onRemoved(): void;
+  onRemoved?(): void;
 
   /**
    * Callback invoked when model instance created in store
    */
-  onCreated(): void;
+  onCreated?(): void;
 }
