@@ -5,7 +5,7 @@ import type {
   Labels,
 } from "../types";
 import type { IModel } from "./IModel";
-import { LogisticRegressionWorker } from "./logistic-regression-worker";
+import { LogisticRegressionWorker } from "../logistic-regression-worker";
 import { PorterStemmerRu } from "natural";
 
 export class LogisticRegressionModel implements IModel {
@@ -26,7 +26,7 @@ export class LogisticRegressionModel implements IModel {
     const label = score <= 0.5 ? "ham" : "spam";
 
     return {
-      value: label as Labels,
+      label,
       confidence: score,
       reason: "classifier",
     };

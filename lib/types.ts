@@ -1,6 +1,6 @@
 export type ModelType = "logistic-regression";
 
-export type ReasonTypes = "classifier" | "duplicate" | "totem" | "cas";
+export type ReasonTypes = "classifier";
 
 export type Labels = "spam" | "ham";
 
@@ -25,7 +25,7 @@ export type StemmerLanguage =
   | "sv";
 
 export type Prediction = {
-  value: Labels;
-  confidence: number;
+  label: Labels;
+  confidence?: number;
   reason?: ReasonTypes;
 };
