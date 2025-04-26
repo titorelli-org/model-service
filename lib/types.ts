@@ -1,6 +1,6 @@
-export type ModelType = "logistic-regression";
+export type ModelType = "logistic-regression" | "duplicate" | "chain";
 
-export type ReasonTypes = "classifier";
+export type ReasonTypes = "classifier" | "duplicate";
 
 export type Labels = "spam" | "ham";
 

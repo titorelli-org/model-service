@@ -26,7 +26,11 @@ export class ValueHolder<V extends HolderValueBase, Args extends any[]> {
 
     this.value = value;
 
-    value.onCreated?.();
+    if (Array.isArray(value)) {
+      value.forEach((v) => v.onCreated?.());
+    } else {
+      value.onCreated?.();
+    }
 
     return value;
   }
@@ -38,7 +42,11 @@ export class ValueHolder<V extends HolderValueBase, Args extends any[]> {
   }
 
   private onTimeout = () => {
-    this.value?.onRemoved?.();
+    if (Array.isArray(this.value)) {
+      this.value.forEach((v) => v.onRemoved?.());
+    } else {
+      this.value?.onRemoved?.();
+    }
 
     delete this.value;
   };

@@ -1,6 +1,6 @@
-import type { UnlabeledExample, Prediction, LabeledExample } from "../types";
-import type { IModel } from "./IModel";
-import { LogisticRegressionWorker } from "../logistic-regression-worker";
+import type { UnlabeledExample, Prediction, LabeledExample } from "../../types";
+import type { IModel } from "../IModel";
+import { LogisticRegressionWorker } from "../../logistic-regression-worker";
 import { PorterStemmerRu } from "natural";
 
 export class LogisticRegressionModel implements IModel {

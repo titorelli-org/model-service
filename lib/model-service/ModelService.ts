@@ -1,10 +1,11 @@
-import { LogisticRegressionModel } from "../models";
+import { LogisticRegressionModel, DuplicateModel, ChainModel } from "../models";
 import { TemporaryStorage } from "../temporary-storage";
 import type { Logger } from "pino";
 import type { LabeledExample, Labels } from "../types";
+import { env } from "../env";
 
 export class ModelService {
-  private store: TemporaryStorage<LogisticRegressionModel, []>;
+  private store: TemporaryStorage<ChainModel, []>;
 
   constructor(private modelFilename: string, private logger: Logger) {
     this.store = new TemporaryStorage(
@@ -32,5 +33,10 @@ export class ModelService {
     await model.trainBulk(examples);
   }
 
-  private createModel = () => new LogisticRegressionModel(this.modelFilename);
+  private createModel = () => {
+    return new ChainModel([
+      new LogisticRegressionModel(this.modelFilename),
+      new DuplicateModel(env.TEXT_ORIGIN),
+    ]);
+  };
 }

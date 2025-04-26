@@ -1,2 +1,4 @@
 export * from "./IModel";
-export * from "./LogisticRegression";
+export * from "./logistic-regression";
+export * from "./duplicate";
+export * from "./chain";
