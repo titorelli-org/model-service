@@ -35,8 +35,8 @@ export class ModelService {
 
   private createModel = () => {
     return new ChainModel([
-      new LogisticRegressionModel(this.modelFilename),
       new DuplicateModel(env.TEXT_ORIGIN),
+      new LogisticRegressionModel(this.modelFilename),
     ]);
   };
 }
