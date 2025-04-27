@@ -18,13 +18,7 @@ export class ModelService {
   async predict(text: string) {
     const model = await this.store.getOrCreate();
 
-    console.log("predict()", "in ModelService");
-
-    const result = await model.predict({ text });
-
-    console.log("result =", result);
-
-    return result;
+    return model.predict({ text });
   }
 
   async train(text: string, label: Labels) {

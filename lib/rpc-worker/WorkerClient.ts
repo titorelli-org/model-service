@@ -63,8 +63,6 @@ export abstract class WorkerClient<WD extends Record<string, unknown>> {
       const handler = (evt: { method: string; result?: any }) => {
         if (evt.method !== eventName) return;
 
-        console.log("Worker ready: ", this.workerPath);
-
         resolve(evt.result);
 
         this.impl!.removeListener("message", handler);

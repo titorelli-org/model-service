@@ -20,10 +20,6 @@ export class LogisticRegressionModel implements IModel {
     );
     const label = score <= 0.5 ? "ham" : "spam";
 
-    console.log("predict()", "in LogisticRegressionModel");
-
-    console.log({ score, label });
-
     return {
       label,
       confidence: score,
