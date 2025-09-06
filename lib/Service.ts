@@ -2,7 +2,10 @@ import type { Logger } from "pino";
 import fastify, { type FastifyInstance } from "fastify";
 import type { JwksStore } from "@titorelli-org/jwks-store";
 import { oidcProvider } from "@titorelli-org/fastify-oidc-provider";
-import { protectedRoutes } from "@titorelli-org/fastify-protected-routes";
+import {
+  protectedRoutes,
+  TokenValidator,
+} from "@titorelli-org/fastify-protected-routes";
 import modelPlugin from "./fastify/plugins/model";
 import type { ModelService } from "./model-service";
 import { env } from "./env";
@@ -49,13 +52,20 @@ export class Service {
       logger: this.logger,
     });
 
+    const tokenValidator = new TokenValidator({
+      jwksStore: this.jwksStore,
+      testSubject: () => true,
+      testAudience: () => true,
+      logger: this.logger,
+    });
+
     await this.server.register(protectedRoutes, {
       origin: env.MODEL_ORIGIN,
       authorizationServers: [`${env.MODEL_ORIGIN}/oidc`],
       allRoutesRequireAuthorization: false,
       logger: this.logger,
-      async checkToken() {
-        return true;
+      async checkToken(token, url, scopes) {
+        return tokenValidator.validate(token, url, scopes);
       },
     });
 
