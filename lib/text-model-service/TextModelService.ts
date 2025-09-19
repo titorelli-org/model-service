@@ -4,7 +4,7 @@ import type { Logger } from "pino";
 import type { LabeledExample, Labels } from "../types";
 import { env } from "../env";
 
-export class ModelService {
+export class TextModelService {
   private store: TemporaryStorage<ChainModel, []>;
 
   constructor(private modelFilename: string, private logger: Logger) {

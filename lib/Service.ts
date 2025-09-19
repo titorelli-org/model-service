@@ -6,14 +6,17 @@ import {
   protectedRoutes,
   TokenValidator,
 } from "@titorelli-org/fastify-protected-routes";
-import modelPlugin from "./fastify/plugins/model";
-import type { ModelService } from "./model-service";
+import textModelPlugin from "./fastify/plugins/text-model";
+import imageModelPlugin from "./fastify/plugins/image-model";
+import type { TextModelService } from "./text-model-service";
+import type { ImageModelService } from "./image-model-service";
 import { env } from "./env";
 
 export interface ServiceConfig {
   host: string;
   port: number;
-  model: ModelService;
+  textModel: TextModelService;
+  imageModel: ImageModelService;
   jwksStore: JwksStore;
   logger: Logger;
 }
@@ -21,16 +24,25 @@ export interface ServiceConfig {
 export class Service {
   private readonly host: string;
   private readonly port: number;
-  private readonly model: ModelService;
+  private readonly textModel: TextModelService;
+  private readonly imageModel: ImageModelService;
   private readonly jwksStore: JwksStore;
   private readonly logger: Logger;
   private server: FastifyInstance;
   private readonly ready: Promise<void>;
 
-  constructor({ model, logger, host, port, jwksStore }: ServiceConfig) {
+  constructor({
+    textModel,
+    imageModel,
+    logger,
+    host,
+    port,
+    jwksStore,
+  }: ServiceConfig) {
     this.host = host;
     this.port = port;
-    this.model = model;
+    this.textModel = textModel;
+    this.imageModel = imageModel;
     this.jwksStore = jwksStore;
     this.logger = logger;
 
@@ -69,8 +81,13 @@ export class Service {
       },
     });
 
-    await this.server.register(modelPlugin, {
-      model: this.model,
+    await this.server.register(textModelPlugin, {
+      model: this.textModel,
+      logger: this.logger,
+    });
+
+    await this.server.register(imageModelPlugin, {
+      model: this.imageModel,
       logger: this.logger,
     });
   }

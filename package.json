@@ -13,6 +13,7 @@
   "dependencies": {
     "@fastify/swagger": "^9.5.1",
     "@fastify/swagger-ui": "^5.2.3",
+    "@gradio/client": "^1.19.0",
     "@openobserve/pino-openobserve": "^1.0.0",
     "@titorelli-org/fastify-oidc-provider": "^1.1.0",
     "@titorelli-org/fastify-protected-routes": "^0.6.2",

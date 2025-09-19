@@ -12,7 +12,7 @@ import {
   PorterStemmerSv,
 } from "natural";
 
-export const getStemmer = (lang: StemmerLanguage) => {
+export const getStemmer = (lang?: StemmerLanguage) => {
   switch (lang) {
     case "es":
       return PorterStemmerEs;

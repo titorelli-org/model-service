@@ -1,25 +1,25 @@
 import { Logger } from "pino";
-import type { ModelService } from "../../../model-service";
+import type { TextModelService } from "../../../text-model-service";
 import { FastifyInstance } from "fastify";
 
-export class ModelPlugin {
+export class TextModelPlugin {
   public readonly ready: Promise<void>;
 
   constructor(
     private readonly service: FastifyInstance,
-    private readonly model: ModelService,
+    private readonly textModel: TextModelService,
     private readonly logger: Logger,
   ) {
     this.ready = this.initialize();
   }
 
-  private async initialize() {
+  private installPredictRoute(prefix = "") {
     this.service.post<{
       Body: {
         text: string;
       };
     }>(
-      "/predict",
+      `${prefix}/predict`,
       {
         schema: {
           body: {
@@ -42,17 +42,19 @@ export class ModelPlugin {
         },
       },
       async ({ body: { text } }) => {
-        return this.model.predict(text);
+        return this.textModel.predict(text);
       },
     );
+  }
 
+  private installTrainRoute(prefix = "") {
     this.service.post<{
       Body: {
         label: "spam" | "ham";
         text: string;
       };
     }>(
-      "/train",
+      `${prefix}/train`,
       {
         schema: {
           body: {
@@ -70,17 +72,19 @@ export class ModelPlugin {
         },
       },
       async ({ body: { text, label } }) => {
-        await this.model.train(text, label);
+        await this.textModel.train(text, label);
       },
     );
+  }
 
+  private installBulkTrainRoute(prefix = "") {
     this.service.post<{
       Body: {
         label: "spam" | "ham";
         text: string;
       }[];
     }>(
-      "/trainBulk",
+      `${prefix}/trainBulk`,
       {
         schema: {
           body: {
@@ -101,8 +105,20 @@ export class ModelPlugin {
         },
       },
       async ({ body: examples }) => {
-        await this.model.trainBulk(examples);
+        await this.textModel.trainBulk(examples);
       },
     );
+  }
+
+  private async initialize() {
+    // Modern
+    this.installPredictRoute("/text");
+    this.installTrainRoute("/text");
+    this.installBulkTrainRoute("/text");
+
+    // Legacy
+    this.installPredictRoute();
+    this.installTrainRoute();
+    this.installBulkTrainRoute();
   }
 }
