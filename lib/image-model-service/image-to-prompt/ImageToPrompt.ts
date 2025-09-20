@@ -23,14 +23,13 @@ export class ImageToPrompt {
       );
 
       const client = await this.getClient("ovi054/image-to-prompt");
+      // const client = await this.getClient("http://localhost:7860");
 
       const results = await Promise.all(
         imagesBlobs.map((image) =>
           image ? client.predict("/predict", { image }) : null,
         ),
       );
-
-      console.log("results", results);
 
       return results.flatMap(({ data }) => data as string[]);
     } catch (e) {

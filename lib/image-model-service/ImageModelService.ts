@@ -1,7 +1,7 @@
 import { LogisticRegressionModel } from "../models";
 import type { Logger } from "pino";
 import { TemporaryStorage } from "../temporary-storage";
-import { ImageToPrompt } from "./ImageToPrompt";
+import { ImageToPrompt } from "./image-to-prompt";
 import { getStemmer } from "../models/logistic-regression/getStemmer";
 
 export class ImageModelService {
