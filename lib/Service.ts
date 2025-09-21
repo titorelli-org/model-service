@@ -61,6 +61,7 @@ export class Service {
     await this.server.register(oidcProvider, {
       origin: env.MODEL_ORIGIN,
       jwksStore: this.jwksStore,
+      initialAccessToken: env.INITIAL_ACCESS_TOKEN,
       logger: this.logger,
     });
 
