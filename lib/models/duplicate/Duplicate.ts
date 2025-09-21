@@ -14,7 +14,7 @@ export class DuplicateModel implements IModel {
 
   async predict({ text }: UnlabeledExample): Promise<Prediction | null> {
     try {
-      const uuid = getUUIDStringFromText(text);
+      const uuid = await getUUIDStringFromText(text);
       const url = new URL(`/metadata/${uuid}`, this.textStorageOrigin);
 
       const resp = await fetch(url);
