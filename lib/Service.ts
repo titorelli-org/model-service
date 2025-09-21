@@ -75,7 +75,7 @@ export class Service {
     await this.server.register(protectedRoutes, {
       origin: env.MODEL_ORIGIN,
       authorizationServers: [`${env.MODEL_ORIGIN}/oidc`],
-      allRoutesRequireAuthorization: false,
+      allRoutesRequireAuthorization: true,
       logger: this.logger,
       async checkToken(token, url, scopes) {
         return tokenValidator.validate(token, url, scopes);
