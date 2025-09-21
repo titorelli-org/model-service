@@ -1,4 +1,4 @@
-import { Client } from "@gradio/client";
+import type { Client } from "@gradio/client";
 import type { Logger } from "pino";
 
 export type Result = {
@@ -40,6 +40,8 @@ export class ImageToPrompt {
   }
 
   private async getClient(source: string) {
+    const { Client } = await import("@gradio/client");
+
     let client = this.clientsCache.get(source);
 
     if (!client) {
