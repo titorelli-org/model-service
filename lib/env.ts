@@ -8,4 +8,5 @@ export const env = cleanEnv(process.env, {
   OO_AUTH_CRED: str(),
   OO_BASE_URL: url(),
   INITIAL_ACCESS_TOKEN: str(),
+  JWT_SECRET: str(),
 });

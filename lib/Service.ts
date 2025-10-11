@@ -67,6 +67,10 @@ export class Service {
 
     const tokenValidator = new TokenValidator({
       jwksStore: this.jwksStore,
+      apiTokens: {
+        enable: true,
+        jwtSecret: env.JWT_SECRET,
+      },
       testSubject: () => true,
       testAudience: () => true,
       logger: this.logger,
